@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_133546) do
+ActiveRecord::Schema[7.1].define(version: 2023_06_19_133546) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,13 +43,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_133546) do
   end
 
   create_table "email_verification_tokens", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_email_verification_tokens_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
-    t.integer "following_id", null: false
-    t.integer "follower_id", null: false
+    t.bigint "following_id", null: false
+    t.bigint "follower_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["follower_id"], name: "index_follows_on_follower_id"
@@ -55,8 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_133546) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "tweet_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "tweet_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tweet_id"], name: "index_likes_on_tweet_id"
@@ -64,21 +67,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_133546) do
   end
 
   create_table "password_reset_tokens", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
     t.string "name"
     t.text "body"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "user_agent"
     t.string "ip_address"
     t.datetime "created_at", null: false
@@ -87,13 +90,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_133546) do
   end
 
   create_table "tweets", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "root_tweet_id"
-    t.integer "parent_tweet_id"
-    t.integer "retweet_id"
+    t.bigint "root_tweet_id"
+    t.bigint "parent_tweet_id"
+    t.bigint "retweet_id"
     t.index ["parent_tweet_id"], name: "index_tweets_on_parent_tweet_id"
     t.index ["retweet_id"], name: "index_tweets_on_retweet_id"
     t.index ["root_tweet_id"], name: "index_tweets_on_root_tweet_id"
